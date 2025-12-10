@@ -48,12 +48,37 @@ export default class Scene {
     }
 
     /**
+     * Edits the content of the scene, including the scene text and the choice texts.
+     * @param {string} newText The new scene text.
+     * @param {Map<string, string> | null} newChoices A map of choice keys to new choice texts. null means no choices.
+     * @returns {boolean} True if content was edited successfully, otherwise false.
+     */
+    updateContent(newText, newChoices = null) {
+        let edited = false;
+        if (typeof newText === 'string' && newText.trim() !== '') {
+            this.text = newText;
+            edited = true;
+        }
+
+        if(this.choicesAreEqual(newChoices)) {return edited;}
+
+        if (newChoices instanceof Map && newChoices) {
+            this.choices = newChoices;
+            edited = true;
+        } else if(newChoices === null) {
+            this.choices.clear();
+            edited = true;
+        }
+        return edited;
+    }
+
+    /**
      * Updates the text of an existing choice.
      * @param {string} next - Target scene ID.
      * @param {string} newText - New description text.
      * @returns {boolean} True if updated, false if not found.
      */
-    updateChoice(next, newText) {
+    updateChoiceText(next, newText) {
         if (!this.choices.has(next)) return false;
         this.choices.set(next, newText);
         return true;
@@ -73,6 +98,21 @@ export default class Scene {
     getAllChoices()
     {
         return Array.from(this.choices, ([next, text]) => ({ text, next }));
+    }
+
+    /**
+     * Compares the scene's choices with a new set of choices.
+     * @param {Map<string, string>} newChoices - A map of new choice keys to new choice texts.
+     * @returns {boolean} true if the choices are the same, false otherwise.
+     */
+    choicesAreEqual(newChoices) {
+        if (this.choices.size !== newChoices.size) return false;
+
+        for (let [key, value] of this.choices) {
+            if (newChoices.get(key) !== value) return false;
+        }
+
+        return true;
     }
 
     /**

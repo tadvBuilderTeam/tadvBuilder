@@ -162,45 +162,20 @@ export default class Story {
         return false;
     }
 
-    /* Content means the story text of the scene itself, and the description texts of the choices in this scene.
-     * @param {string} key
-     * @param {string} storyText
-     * @param {Map<string,string>} choiceTexts(<key,text>)
-     * @return {boolean} true if content was edited, false if not found
-     */
-    editSceneContent(key, storyText, choiceTexts = null)
-    {
-        let scene = this.scenes.get(key);
-        if(!scene){
-            console.warn(`Scene ${key} not found`);
-            return false;
-        }
-        if(storyText){
-            scene.text = storyText;
-        }
-        if(choiceTexts){
-            for (const [next, text] of choiceTexts.entries()) {
-                if(! scene.updateChoice(next, text)) { console.warn(`Failed to edit choice ${next} in scene ${key}`); }
-            }
-        }
-        return true;
-    }
-
     /**
-     * Updates the choices of a scene. Does no check for circles.
-     * @param key
-     * @param newChoices
-     * @returns {boolean}
+     * Edits the scene, including both the scene's text and its choices, only if there are differences.
+     * @param {string} key - The key of the scene to edit.
+     * @param {string} newText - The new scene text.
+     * @param {Map<string, string>} newChoices - A map of choice keys to new choice texts.
+     * @returns {boolean} true if the content was edited, false if no changes were made.
      */
-    editSceneChoices(key, newChoices)
-    {
+    editScene(key, newText, newChoices = null) {
         let scene = this.scenes.get(key);
-        if(!scene){
+        if (!scene) {
             console.warn(`Scene ${key} not found`);
             return false;
         }
-        scene.choices = new Map(newChoices);
-        return true;
+        return scene.updateContent(newText,newChoices);
     }
 
     /**

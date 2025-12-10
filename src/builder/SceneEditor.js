@@ -110,7 +110,7 @@ export default class SceneEditor {
             choices.set(choiceKeyInput.value.trim(), choiceTextInput.value.trim());
         }
 
-        let success = story.editSceneContent(key, text, choices);
+        let success = story.editScene(key, text, choices);
         if (success) {
             SceneRenderer.render(story, key);
             Feedback.show(`Szene wurde erfolgreich bearbeitet.`, status, true);

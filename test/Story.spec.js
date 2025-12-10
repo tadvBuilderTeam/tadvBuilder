@@ -225,7 +225,7 @@ describe("Test cycle detection", () => {
 });
 
 describe("Test editSceneChoices method", () => {
-    let story;
+    let story : Story;
 
     beforeEach(() => {
         // Reset the story before each test
@@ -237,16 +237,16 @@ describe("Test editSceneChoices method", () => {
         story.addScene(sceneA);
         story.root = sceneA;
 
-        const newChoices = new Map([["choice1", "option1"], ["choice2", "option2"]]);
-        const result = story.editSceneChoices("A", newChoices);
+        const newChoices : Map = new Map([["choice1", "option1"], ["choice2", "option2"]]);
+        const result = story.editScene("A", null,newChoices);
 
         expect(result).toBe(true);
         expect(sceneA.choices).toEqual(newChoices);
     });
 
     it("should return false for a non-existent scene", () => {
-        const newChoices = new Map([["choice1", "option1"]]);
-        const result = story.editSceneChoices("Z", newChoices);
+        const newChoices : Map = new Map([["choice1", "option1"]]);
+        const result = story.editScene("Z",null, newChoices);
 
         expect(result).toBe(false);
     });
@@ -257,7 +257,7 @@ describe("Test editSceneChoices method", () => {
         story.root = sceneA;
 
         const newChoices = new Map();
-        const result = story.editSceneChoices("A", newChoices);
+        const result = story.editScene("A", null,newChoices);
 
         expect(result).toBe(true);
         expect(sceneA.choices).toEqual(newChoices);
@@ -287,8 +287,8 @@ describe("Test changeSceneParent method", () => {
     });
 
     it("should set parent to null if new parent does not exist", () => {
-        const sceneA = new Scene("A", "Root Scene");
-        const sceneB = new Scene("B", "Child Scene");
+        const sceneA : Scene = new Scene("A", "Root Scene");
+        const sceneB : Scene = new Scene("B", "Child Scene");
         story.addScene(sceneA);
         story.addScene(sceneB);
         story.root = sceneA;
