@@ -52,11 +52,17 @@ export default class SceneEditor {
             return;
         }
 
-        const choiceElements = document.querySelectorAll('.choice-inputs');
+        const creatorChoicesContainer = document.getElementById('creator-choices-container');
+        const choiceElements = Array.from(creatorChoicesContainer.querySelectorAll('.choice-inputs'));
         const choices = new Map();
         choiceElements.forEach(el => {
-            const text = el.querySelector('.choice-text').value.trim();
-            const next = el.querySelector('.choice-next').value.trim();
+            const textInput = el.querySelector('.choice-text');
+            const nextInput = el.querySelector('.choice-next');
+            if(! nextInput) {
+                console.log("No input for next scene key found. ");
+            }
+            const text = textInput.value.trim();
+            const next = nextInput.value.trim();
             if (text && next) choices.set(next, text);
         });
 
@@ -106,8 +112,12 @@ export default class SceneEditor {
             if (!choiceTextInput || !choiceKeyInput
                 || !(choiceTextInput instanceof HTMLInputElement) || !(choiceKeyInput instanceof HTMLInputElement)) {
                 console.log("Error in editScene: Invalid choice input elements. Skipping choice.");
+                continue;
             }
-            choices.set(choiceKeyInput.value.trim(), choiceTextInput.value.trim());
+            let choiceKey = choiceKeyInput.value.trim();
+            let choiceText = choiceTextInput.value.trim();
+            if( !choiceKey ) continue;
+            choices.set(choiceKey, choiceText);
         }
 
         let success = story.editScene(key, text, choices);
