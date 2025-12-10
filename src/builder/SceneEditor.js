@@ -7,7 +7,7 @@ import TreeEditor from "./TreeEditor.js";
 
 /**
  * Editor used by the form-based story builder.
- * Holds a reference to the Story instance and the Scene class.
+ * Holds a reference to the Story instance
  */
 export default class SceneEditor {
     /**
@@ -15,26 +15,6 @@ export default class SceneEditor {
      */
     constructor(storyInstance) {
         this.story = storyInstance;
-    }
-
-    /**
-     * Adds a new choice field to the choices container.
-     * @param {HTMLElement} parentElement
-     * @returns void
-     */
-    static addChoiceField(parentElement) {
-        if (!parentElement) {
-            console.error('parentElement is not found.');
-            return;
-        }
-
-        const container = document.createElement('div');
-        container.className = 'choice-inputs';
-        container.innerHTML = `
-        <input type="text" class="choice-text" placeholder="Entscheidungstext">
-        <input type="text" class="choice-next" placeholder="Nächste Szene (Schlüssel)">
-      `;
-        parentElement.appendChild(container);
     }
 
     /**
@@ -125,5 +105,44 @@ export default class SceneEditor {
             SceneRenderer.render(story, key);
             Feedback.show(`Szene wurde erfolgreich bearbeitet.`, status, true);
         }
+    }
+
+    /**
+     * Adds a new choice field to the choices container.
+     * @param {HTMLElement} parentElement
+     * @returns void
+     */
+    static addChoiceField(parentElement) {
+        if (!parentElement) {
+            console.error('parentElement is not found.');
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'choice-inputs';
+        container.innerHTML = `
+        <input type="text" class="choice-text" placeholder="Entscheidungstext">
+        <input type="text" class="choice-next" placeholder="Nächste Szene (Schlüssel)">
+      `;
+        container.appendChild(SceneEditor.#createDeleteButton(container));
+        parentElement.appendChild(container);
+    }
+
+    /**
+     * A delete btn that deletes one choice input form with 2 textinputs
+     * @param {HTMLDivElement} choiceInputsContainer
+     * @returns {HTMLButtonElement}
+     */
+    static #createDeleteButton(choiceInputsContainer) {
+        const btn = document.createElement('button');
+        btn.classList.add('choiceform-delete');
+        btn.setAttribute('aria-label', `Choice löschen`);
+        btn.textContent = '🗑';
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            choiceInputsContainer.remove();
+        });
+        return btn;
     }
 }

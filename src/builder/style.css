@@ -248,3 +248,14 @@ input[type="checkbox"] {
 .close:hover {
     transform: scale(1.2);
 }
+
+.choiceform-delete {
+    color: var(--color-text);
+    border: 1px solid transparent;
+    margin-left: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
