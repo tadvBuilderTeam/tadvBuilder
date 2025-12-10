@@ -106,6 +106,7 @@ export default class Scene {
      * @returns {boolean} true if the choices are the same, false otherwise.
      */
     choicesAreEqual(newChoices) {
+        if(!newChoices) {return false;}
         if (this.choices.size !== newChoices.size) return false;
 
         for (let [key, value] of this.choices) {

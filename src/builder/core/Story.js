@@ -169,7 +169,7 @@ export default class Story {
      * @param {Map<string, string>} newChoices - A map of choice keys to new choice texts.
      * @returns {boolean} true if the content was edited, false if no changes were made.
      */
-    editScene(key, newText, newChoices = null) {
+    editScene(key, newText, newChoices) {
         let scene = this.scenes.get(key);
         if (!scene) {
             console.warn(`Scene ${key} not found`);
