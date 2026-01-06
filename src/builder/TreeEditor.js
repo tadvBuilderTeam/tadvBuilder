@@ -155,10 +155,11 @@ export default class TreeEditor {
         const label = this.#createLabel(sceneKey, scene);
         header.appendChild(label);
 
+        const editBtn = this.#createEditButton(sceneKey, story);
+        header.appendChild(editBtn);
         // Delete button (non-root only)
         if (!isRoot) {
             const delBtn = this.#createDeleteButton(sceneKey, story);
-            // Platzierung: direkt in/bei der Node (neben dem Label), nicht ganz rechts
             label.appendChild(delBtn);
         }
         return header;
@@ -196,8 +197,7 @@ export default class TreeEditor {
         btn.setAttribute('aria-label', `Szene "${sceneKey}" löschen`);
         btn.textContent = '🗑';
         btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+            e.preventDefault(); e.stopPropagation();
             const ok = confirm(`Soll die Szene "${sceneKey}" wirklich gelöscht werden?`);
             if (!ok) return;
             const success = story.removeScene(sceneKey);
@@ -210,6 +210,48 @@ export default class TreeEditor {
             // Re-render tree after deletion
             this.render(story);
         });
+        return btn;
+    }
+
+    /**
+     *
+     * @param sceneKey
+     * @param story {Story}
+     * @returns {HTMLButtonElement}
+     */
+    #createEditButton(sceneKey, story) {
+        const scene = story.getScene(sceneKey);
+        if (!scene) return null;
+
+        const btn = document.createElement('button');
+        btn.classList.add('.tree-editscene-btn');
+        btn.setAttribute('aria-label', `Szene "${sceneKey}" bearbeiten`);
+        btn.innerHTML = '&#x270F;&#xFE0F;';
+        btn.addEventListener('click', (e) => {
+            e.preventDefault(); e.stopPropagation();
+
+            // insert existing content
+            const sceneKeyTextfield = document.getElementById("editor-scene-key");
+            sceneKeyTextfield.value = sceneKey;
+            const sceneTextfield = document.getElementById("editor-scene-text");
+            sceneTextfield.value = scene.text;
+            const choicesContainer = document.getElementById("editor-choices-container");
+            choicesContainer.innerHTML = '';
+            for (const [next, choiceText] of scene.choices){
+                let choicediv = document.createElement('div');
+                choicediv.classList.add('choice-inputs');
+                let textInput = document.createElement('input');
+                let nextInput = document.createElement('input');
+                textInput.classList.add('choice-text'); nextInput.classList.add('choice-next');
+                textInput.type = 'text'; nextInput.type = 'text';
+                textInput.value = choiceText; nextInput.value = next;
+                choicediv.appendChild(textInput); choicediv.appendChild(nextInput);
+                choicesContainer.appendChild(choicediv);
+            }
+
+            const popup = document.getElementById("edit-scene-popup");
+            popup.style.display = "block";
+        })
         return btn;
     }
 

@@ -201,7 +201,12 @@ input[type="checkbox"] {
     border: 1px solid var(--color-foreground);
     margin-left: 0.25rem;
 }
-.tree-node-header:hover .tree-addscene-btn {
+.tree-editscene-btn {
+    visibility: hidden;
+    border: 1px solid var(--color-foreground);
+    margin-left: 0.25rem;
+}
+.tree-node-header:hover .tree-editscene-btn:hover {
     visibility: visible;
 }
 .tree-edge {
