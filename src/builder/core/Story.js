@@ -55,7 +55,8 @@ export default class Story {
      * @param {string} sceneKey - Key of the scene to find a parent for.
      * @returns {Scene|null} The parent Scene, or null if not found.
      */
-    findParent(sceneKey) {
+    findParent(sceneKey) 
+    {
         for (const scene of this.scenes.values()) {
             if (scene.choices instanceof Map && scene.choices.has(sceneKey)) {
                 return scene;
@@ -70,7 +71,10 @@ export default class Story {
      * @param {string} key
      * @returns {Scene|null}
      */
-    getScene(key) { return this.scenes.get(key) || null; }
+    getScene(key) 
+    { 
+        return this.scenes.get(key) || null; 
+    }
 
     /**
      * Depth of a scene relative to the root scene.
@@ -78,7 +82,8 @@ export default class Story {
      * @param {Scene} scene - The scene whose depth needs to be calculated.
      * @returns {number} The depth of the scene, -1 if the scene is not found.
      */
-    static getSceneDepth(scenes, scene) {
+    static getSceneDepth(scenes, scene) 
+    {
         if(! scenes.has(scene.key)){ return -1; }
 
         let depth = 0;
@@ -137,7 +142,8 @@ export default class Story {
      * @param {Story} story - The story instance containing the scenes.
      * @returns {boolean} True if a cycle is found, false otherwise.
      */
-    static hasCircle(story){
+    static hasCircle(story)
+    {
         const visited = new Set();  // Set to track fully visited nodes
         const scenes = Story.getScenesDFS(story);
 
@@ -169,7 +175,8 @@ export default class Story {
      * @param {Map<string, string>} newChoices - A map of choice keys to new choice texts.
      * @returns {boolean} true if the content was edited, false if no changes were made.
      */
-    editScene(key, newText, newChoices) {
+    editScene(key, newText, newChoices) 
+    {
         let scene = this.scenes.get(key);
         if (!scene) {
             console.warn(`Scene ${key} not found`);
@@ -210,7 +217,8 @@ export default class Story {
      * @param {string} key
      * @returns {boolean} True if found and deleted, else False
      */
-    removeScene(key){
+    removeScene(key)
+    {
         const scene = this.scenes.get(key);
         if(!scene){
             console.warn(`Scene ${key} not found`);
@@ -250,7 +258,8 @@ export default class Story {
      * @param {Object} parsedJson
      * @returns {Story | null} New Scene instance or null if parsing fails.
      */
-    static fromJson(parsedJson) {
+    static fromJson(parsedJson) 
+    {
         if (!parsedJson || typeof parsedJson !== 'object') { return null; }
 
         let story = new Story(Scene);

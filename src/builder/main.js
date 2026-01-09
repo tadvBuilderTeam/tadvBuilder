@@ -23,7 +23,8 @@ function startStory()
  * Imports a story from a JSON file.
  * @returns void
  */
-async function importStory() {
+async function importStory() 
+{
     const fileInput = document.getElementById("json-file");
     const importStatus = document.getElementById("import-status");
     if (!fileInput.files.length) {
@@ -59,7 +60,8 @@ async function importStory() {
  * Exports the current story to a JSON file.
  * @returns void
  */
-function exportToJson() {
+function exportToJson() 
+{
     if (!story) {
         Feedback.show("No story available to export.", document.getElementById("import-status"), false);
         return;
@@ -73,7 +75,8 @@ function exportToJson() {
  * @returns void
  * @param asEncrypted
  */
-function exportToHtml(asEncrypted) {
+function exportToHtml(asEncrypted) 
+{
     if (!story) {
         Feedback.show("No story available to export.", document.getElementById("import-status"), false);
         return;
@@ -87,7 +90,8 @@ function exportToHtml(asEncrypted) {
     if(success) Feedback.show("Story successfully exported to HTML.", document.getElementById("import-status"), true);
 }
 
-function applyTheme(theme) {
+function applyTheme(theme) 
+{
     if (theme === "default") {
         document.documentElement.removeAttribute("data-theme");
     } else {
@@ -95,7 +99,8 @@ function applyTheme(theme) {
     }
 }
 
-function initializePopup() {
+function initializePopup() 
+{
     const initPopup = (popupId, showBtnId, closeBtnId, addChoiceBtnId, submitBtnId, choicesContainerId, action) => {
         const popup = document.getElementById(popupId);
         const showBtn = document.getElementById(showBtnId);

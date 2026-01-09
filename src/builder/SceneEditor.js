@@ -13,7 +13,8 @@ export default class SceneEditor {
     /**
      * @param {Story} storyInstance - The story instance to be edited.
      */
-    constructor(storyInstance) {
+    constructor(storyInstance) 
+    {
         this.story = storyInstance;
     }
 
@@ -22,7 +23,8 @@ export default class SceneEditor {
      * @param {Story} story
      * @returns void
      */
-    static addScene(story) {
+    static addScene(story) 
+    {
         const sceneKey = document.getElementById('creator-scene-key').value.trim();
         const text = document.getElementById('creator-scene-text').value.trim();
         const editorSection = document.getElementById('scene-creator');
@@ -69,7 +71,8 @@ export default class SceneEditor {
     /**
      * @param {Story} story
      */
-    static editScene(story) {
+    static editScene(story) 
+    {
         const keyInput = document.getElementById("editor-scene-key");
         const status = document.getElementById("editor-scene-status");
         const textInput = document.getElementById("editor-scene-text");
@@ -112,7 +115,8 @@ export default class SceneEditor {
      * @param {HTMLElement} parentElement
      * @returns void
      */
-    static addChoiceField(parentElement) {
+    static addChoiceField(parentElement) 
+    {
         if (!parentElement) {
             console.error('parentElement is not found.');
             return;
@@ -133,7 +137,8 @@ export default class SceneEditor {
      * @param {HTMLDivElement} choiceInputsContainer
      * @returns {HTMLButtonElement}
      */
-    static #createDeleteButton(choiceInputsContainer) {
+    static #createDeleteButton(choiceInputsContainer) 
+    {
         const btn = document.createElement('button');
         btn.classList.add('choiceform-delete');
         btn.setAttribute('aria-label', `Choice löschen`);

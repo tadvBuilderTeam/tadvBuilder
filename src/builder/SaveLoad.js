@@ -119,7 +119,8 @@ export default class SaveLoad {
      * @param {string} encryptionKey - Password for XOR encryption
      * @returns {boolean | Promise<boolean>}
      */
-    static async saveToEncryptedHtml(story, filename, encryptionKey){
+    static async saveToEncryptedHtml(story, filename, encryptionKey)
+    {
         if (!story || !filename || typeof filename !== 'string' || !encryptionKey) {
             console.error("Ungültige Parameter in saveToEncryptedHtml");
             return false;
@@ -158,7 +159,8 @@ export default class SaveLoad {
         }
     }
 
-    static #encryptStory(storyObject, key) {
+    static #encryptStory(storyObject, key) 
+    {
         const jsonString = JSON.stringify(storyObject);
         const utf8Bytes = new TextEncoder().encode(jsonString);
         const keyBytes = new TextEncoder().encode(key);

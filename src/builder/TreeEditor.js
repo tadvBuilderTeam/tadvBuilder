@@ -6,7 +6,8 @@ export default class TreeEditor {
     // Keep one instance per target container id to preserve expand/collapse state across renders
     static #instances = new Map();
 
-    static #getInstance(targetElementId) {
+    static #getInstance(targetElementId) 
+    {
         if (!this.#instances.has(targetElementId)) {
             this.#instances.set(targetElementId, new TreeEditor(targetElementId));
         }
@@ -18,12 +19,14 @@ export default class TreeEditor {
      * @param {import('./core/Story.js').default} story
      * @param {string} targetElementId
      */
-    static render(story, targetElementId = 'tree-html-area') {
+    static render(story, targetElementId = 'tree-html-area') 
+    {
         const inst = TreeEditor.#getInstance(targetElementId);
         inst.render(story);
     }
 
-    constructor(targetElementId) {
+    constructor(targetElementId) 
+    {
         this.targetElementId = targetElementId;
         // Track expanded scene keys. Root will be expanded on first render.
         this.expanded = new Set();
@@ -34,7 +37,8 @@ export default class TreeEditor {
      * Previous content will be removed before rendering.
      * @param {import('./core/Story.js').default} story
      */
-    render(story) {
+    render(story) 
+    {
         const container = this.#getContainer();
         if (!container) return;
 
@@ -54,7 +58,8 @@ export default class TreeEditor {
 
     // ===== Helper methods (private) =====
 
-    #getContainer() {
+    #getContainer() 
+    {
         const container = document.getElementById(this.targetElementId);
         if (!container) {
             console.warn(`TreeEditor: container with id "${this.targetElementId}" not found.`);
@@ -62,33 +67,39 @@ export default class TreeEditor {
         return container;
     }
 
-    #clear(container) {
+    #clear(container) 
+    {
         container.innerHTML = '';
     }
 
-    #hasValidRoot(story) {
+    #hasValidRoot(story) 
+    {
         return !!(story && story.root);
     }
 
-    #appendNoRootMessage(container) {
+    #appendNoRootMessage(container) 
+    {
         const p = document.createElement('p');
         p.textContent = 'Keine Startszene gefunden. Lege zuerst eine Szene mit dem Schlüssel "start" an.';
         container.appendChild(p);
     }
 
-    #ensureRootExpanded(story) {
+    #ensureRootExpanded(story) 
+    {
         if (!this.expanded.has(story.root.key)) {
             this.expanded.add(story.root.key);
         }
     }
 
-    #createRootList() {
+    #createRootList() 
+    {
         const ul = document.createElement('ul');
         ul.classList.add('story-tree');
         return ul;
     }
 
-    #renderNode(sceneKey, parentUl, story, path) {
+    #renderNode(sceneKey, parentUl, story, path) 
+    {
         const li = document.createElement('li');
         const scene = story.getScene(sceneKey);
 
@@ -139,7 +150,8 @@ export default class TreeEditor {
         }
     }
 
-    #createNodeHeader(sceneKey, scene, story) {
+    #createNodeHeader(sceneKey, scene, story) 
+    {
         const header = document.createElement('div');
         header.classList.add('tree-node-header');
         const isRoot = story && story.root && story.root.key === sceneKey;
@@ -165,7 +177,8 @@ export default class TreeEditor {
         return header;
     }
 
-    #createToggleButton(sceneKey, story) {
+    #createToggleButton(sceneKey, story) 
+    {
         const isExpanded = this.#isExpanded(sceneKey);
         const btn = document.createElement('button');
         btn.classList.add('tree-toggle');
@@ -176,13 +189,15 @@ export default class TreeEditor {
         return btn;
     }
 
-    #createToggleSpacer() {
+    #createToggleSpacer() 
+    {
         const spacer = document.createElement('span');
         spacer.classList.add('tree-toggle-spacer');
         return spacer;
     }
 
-    #createLabel(sceneKey, scene) {
+    #createLabel(sceneKey, scene) 
+    {
         const label = document.createElement('span');
         label.classList.add('tree-node');
         const strong = document.createElement('strong');
@@ -191,7 +206,8 @@ export default class TreeEditor {
         return label;
     }
 
-    #createDeleteButton(sceneKey, story) {
+    #createDeleteButton(sceneKey, story) 
+    {
         const btn = document.createElement('button');
         btn.classList.add('tree-delete');
         btn.setAttribute('aria-label', `Szene "${sceneKey}" löschen`);
@@ -219,12 +235,13 @@ export default class TreeEditor {
      * @param story {Story}
      * @returns {HTMLButtonElement}
      */
-    #createEditButton(sceneKey, story) {
+    #createEditButton(sceneKey, story) 
+    {
         const scene = story.getScene(sceneKey);
         if (!scene) return null;
 
         const btn = document.createElement('button');
-        btn.classList.add('.tree-editscene-btn');
+        btn.classList.add('tree-editscene-btn');
         btn.setAttribute('aria-label', `Szene "${sceneKey}" bearbeiten`);
         btn.innerHTML = '&#x270F;&#xFE0F;';
         btn.addEventListener('click', (e) => {
@@ -238,15 +255,15 @@ export default class TreeEditor {
             const choicesContainer = document.getElementById("editor-choices-container");
             choicesContainer.innerHTML = '';
             for (const [next, choiceText] of scene.choices){
-                let choicediv = document.createElement('div');
-                choicediv.classList.add('choice-inputs');
+                let choiceDiv = document.createElement('div');
+                choiceDiv.classList.add('choice-inputs');
                 let textInput = document.createElement('input');
                 let nextInput = document.createElement('input');
                 textInput.classList.add('choice-text'); nextInput.classList.add('choice-next');
                 textInput.type = 'text'; nextInput.type = 'text';
                 textInput.value = choiceText; nextInput.value = next;
-                choicediv.appendChild(textInput); choicediv.appendChild(nextInput);
-                choicesContainer.appendChild(choicediv);
+                choiceDiv.appendChild(textInput); choiceDiv.appendChild(nextInput);
+                choicesContainer.appendChild(choiceDiv);
             }
 
             const popup = document.getElementById("edit-scene-popup");
@@ -255,7 +272,8 @@ export default class TreeEditor {
         return btn;
     }
 
-    #createAddButton(sceneKey) {
+    #createAddButton(sceneKey) 
+    {
         const btn = document.createElement('button');
         btn.classList.add('tree-add');
         btn.setAttribute('aria-label', `Szene "${sceneKey}" hinzufügen`);
@@ -271,22 +289,26 @@ export default class TreeEditor {
         return btn;
     }
 
-    #onToggleClick(e, sceneKey, story) {
+    #onToggleClick(e, sceneKey, story) 
+    {
         e.preventDefault();
         e.stopPropagation();
         this.#toggleExpanded(sceneKey);
         this.render(story); // re-render full tree
     }
 
-    #hasChildren(scene) {
+    #hasChildren(scene) 
+    {
         return !!(scene.choices && scene.choices.size);
     }
 
-    #isExpanded(sceneKey) {
+    #isExpanded(sceneKey) 
+    {
         return this.expanded.has(sceneKey);
     }
 
-    #toggleExpanded(sceneKey) {
+    #toggleExpanded(sceneKey) 
+    {
         if (this.expanded.has(sceneKey)) this.expanded.delete(sceneKey);
         else this.expanded.add(sceneKey);
     }

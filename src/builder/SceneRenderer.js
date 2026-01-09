@@ -8,7 +8,8 @@ export default class SceneRenderer {
      * @param {string} key
      * @param {string} targetElementId
      */
-    static render(story, key, targetElementId = 'play-area') {
+    static render(story, key, targetElementId = 'play-area') 
+    {
         const area = document.getElementById(targetElementId);
         if (!area) return;
 

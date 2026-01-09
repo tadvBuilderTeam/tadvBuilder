@@ -53,7 +53,8 @@ export default class Scene {
      * @param {Map<string, string> | null} newChoices A map of choice keys to new choice texts. null means no choices.
      * @returns {boolean} True if content was edited successfully, otherwise false.
      */
-    updateContent(newText, newChoices = null) {
+    updateContent(newText, newChoices = null) 
+    {
         let edited = false;
         if (typeof newText === 'string' && newText.trim() !== '') {
             this.text = newText;
@@ -78,7 +79,8 @@ export default class Scene {
      * @param {string} newText - New description text.
      * @returns {boolean} True if updated, false if not found.
      */
-    updateChoiceText(next, newText) {
+    updateChoiceText(next, newText) 
+    {
         if (!this.choices.has(next)) return false;
         this.choices.set(next, newText);
         return true;
@@ -89,7 +91,10 @@ export default class Scene {
      * @param {string} next - Target scene ID.
      * @returns {boolean} True if removed, false if not found.
      */
-    removeChoice(next) { return this.choices.delete(next); }
+    removeChoice(next) 
+    { 
+        return this.choices.delete(next); 
+    }
 
     /**
      * Returns all choices as an array of plain objects.
@@ -105,7 +110,8 @@ export default class Scene {
      * @param {Map<string, string>} newChoices - A map of new choice keys to new choice texts.
      * @returns {boolean} true if the choices are the same, false otherwise.
      */
-    choicesAreEqual(newChoices) {
+    choicesAreEqual(newChoices) 
+    {
         if(!newChoices) {return false;}
         if (this.choices.size !== newChoices.size) return false;
 

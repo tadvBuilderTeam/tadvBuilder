@@ -9,7 +9,8 @@ export default class Feedback {
      * @param {boolean} isSuccess - Determines if the message is a success or error.
      * @param {string} mode - Determines how the message is handled ('create' or 'set').
      */
-    static show(message, targetElement, isSuccess, mode = 'create') {
+    static show(message, targetElement, isSuccess, mode = 'create') 
+    {
         if (!targetElement) return;
 
         const feedbackClass = isSuccess ? 'feedback-success' : 'feedback-error';

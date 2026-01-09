@@ -70,7 +70,8 @@
     }
 
     // XOR decryption with position mixing
-    function decryptStory(encryptedHex, key) {
+    function decryptStory(encryptedHex, key) 
+    {
         if(!encryptedHex || encryptedHex.length === 0) {
             console.error("Encrypted story or key not found.");
             return null;
@@ -99,7 +100,8 @@
     }
 
     // Initialize game with async/await
-    async function initializeGame() {
+    async function initializeGame() 
+    {
         console.log("Initializing game...");
 
         story = await decryptStory(ENCRYPTED_STORY, DECRYPTION_KEY);

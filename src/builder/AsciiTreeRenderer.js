@@ -7,7 +7,8 @@ export default class AsciiTreeRenderer {
      * @param {Story} story - The story object containing the scenes.
      * @param {HTMLElement} parentElement Element inside which the output will be inserted.
      */
-    static generateTreeAscii(story,parentElement = document.getElementById('tree-output')) {
+    static generateTreeAscii(story,parentElement = document.getElementById('tree-output')) 
+    {
         console.log("StoryTreeRenderer.generateTreeAscii. Parent: " + parentElement.id + " Story: " + story.root.key);
         if (!parentElement) return;
         if (!story || !story.root) {
